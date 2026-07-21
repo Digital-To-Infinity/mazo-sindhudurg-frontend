@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 const NAV_ITEMS = [
   { href: '/admin/content', label: 'Content' },
+  { href: '/admin/blogs', label: 'Blogs' },
   { href: '/admin/media', label: 'Media' },
   { href: '/admin/submissions', label: 'Submissions' },
   { href: '/admin/settings', label: 'Settings' },

@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+import LoginForm from './LoginForm';
+
+export const metadata: Metadata = {
+  title: 'Admin Login - Mazo Sindhudurg',
+};
+
 export default function AdminLoginPage() {
-  return (
-    <div className="admin-login">
-      <h1>Admin Login</h1>
-      {/* Login form */}
-    </div>
-  )
+  return <LoginForm />;
 }
