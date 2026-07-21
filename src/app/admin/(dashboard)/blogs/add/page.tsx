@@ -11,52 +11,6 @@ import BlogImageUpload from '@/components/add-blog/BlogImageUpload';
 import SEOTags from '@/components/add-blog/SEOTags';
 import BlogActions from '@/components/add-blog/BlogActions';
 import { api } from '@/services/api';
-import ReactQuill from 'react-quill-new';
-
-// ── Register Custom Formats ──
-    // 1. Fonts
-    const Quill = ReactQuill.Quill;
-    const Font = Quill.import('formats/font');
-    Font.whitelist = ['sans-serif', 'serif', 'monospace', 'inter', 'roboto', 'georgia', 'poppins', 'montserrat', 'lato', 'oswald'];
-    Quill.register(Font, true);
-
-const Size = Quill.import('attributors/style/size');
-Size.whitelist = ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px'];
-Quill.register(Size, true);
-
-const BaseImageFormat = Quill.import('formats/image');
-class CustomImage extends BaseImageFormat {
-    static create(value) {
-        const node = super.create(value);
-        // Sometimes value is an object if parsing from delta
-        if (typeof value === 'object') {
-            node.setAttribute('src', value.src || '');
-            if (value.alt) node.setAttribute('alt', value.alt);
-            if (value.title) node.setAttribute('title', value.title);
-        }
-        return node;
-    }
-    
-    static formats(domNode) {
-        return {
-            alt: domNode.getAttribute('alt') || '',
-            title: domNode.getAttribute('title') || ''
-        };
-    }
-    
-    format(name, value) {
-        if (name === 'alt' || name === 'title') {
-            if (value) {
-                this.domNode.setAttribute(name, value);
-            } else {
-                this.domNode.removeAttribute(name);
-            }
-        } else {
-            super.format(name, value);
-        }
-    }
-}
-Quill.register(CustomImage, true);
 
 const defaultCategoryOptions = [
     { value: 'Market Insights', label: 'Market Insights' },

@@ -1,26 +1,26 @@
 'use client';
-import { useEffect, useState } from 'react';
-import ReactQuill from 'react-quill-new';
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { ArrowUp, ArrowDown, Check, X, Wand2 } from 'lucide-react';
-import 'react-quill-new/dist/quill.snow.css';
 import { toast } from 'react-hot-toast';
 
-const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setContent, modules, editorRef, activeImage, setActiveImage }) => {
+const QuillEditor = dynamic(() => import('./QuillEditor'), { ssr: false });
+
+const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setContent, modules, editorRef, activeImage, setActiveImage }: any) => {
 
     useEffect(() => {
         if (!editorRef?.current) return;
         const editor = editorRef.current.getEditor();
         
-        const handleImageClick = (e) => {
+        const handleImageClick = (e: any) => {
             if (e.target.tagName === 'IMG') {
-                const QuillClass = ReactQuill.Quill || editor.constructor;
-                const blot = QuillClass.find(e.target);
+                const QuillClass = (window as any).Quill || editor.constructor;
+                const blot = QuillClass?.find ? QuillClass.find(e.target) : null;
                 if (blot) {
                     const index = editor.getIndex(blot);
                     if (index !== null) {
                         editor.setSelection(index, 1);
                         const format = editor.getFormat(index);
-                        const bounds = editor.getBounds(index);
                         setActiveImage({
                             index: index,
                             alt: format.alt || '',
@@ -34,11 +34,9 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
         };
 
         const handleKeydown = () => {
-            // Any typing or arrow key navigation should hide the image toolbar
             setActiveImage(null);
         };
 
-        // We bind native DOM events to the editor root which are much more reliable than Quill's selection-change
         editor.root.addEventListener('click', handleImageClick);
         editor.root.addEventListener('keydown', handleKeydown);
 
@@ -48,7 +46,7 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
         };
     }, [editorRef, setActiveImage]);
 
-    const handleFormatFAQs = (e) => {
+    const handleFormatFAQs = (e: any) => {
         e.preventDefault();
         const editor = editorRef.current?.getEditor();
         if (!editor) return;
@@ -58,7 +56,7 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
         const doc = parser.parseFromString(html, 'text/html');
         
         const headings = Array.from(doc.querySelectorAll('h1, h2, h3'));
-        const faqHeaderIndex = headings.findIndex(h => /faqs?|frequently asked questions/i.test(h.textContent));
+        const faqHeaderIndex = headings.findIndex(h => /faqs?|frequently asked questions/i.test(h.textContent || ''));
         
         if (faqHeaderIndex === -1) {
             toast.error('Could not find a section titled "FAQs" or "Frequently Asked Questions".');
@@ -67,7 +65,6 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
 
         const faqHeader = headings[faqHeaderIndex];
         
-        // Standardize the FAQ header to H2
         const newFaqHeader = doc.createElement('h2');
         newFaqHeader.innerHTML = faqHeader.innerHTML;
         faqHeader.replaceWith(newFaqHeader);
@@ -77,28 +74,24 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
 
         while (current) {
             const next = current.nextElementSibling;
-            
             const isHeading = current.tagName.match(/^H[1-6]$/);
-            const isEmpty = !current.textContent.trim() && current.tagName !== 'IMG' && current.tagName !== 'BR';
+            const isEmpty = !(current.textContent || '').trim() && current.tagName !== 'IMG' && current.tagName !== 'BR';
 
             if (isEmpty) {
                 current.remove();
             } else if (isHeading) {
                 if (expectingQuestion) {
-                    // Turn it into an H3 question
                     const h3 = doc.createElement('h3');
                     h3.innerHTML = current.innerHTML;
                     current.replaceWith(h3);
                     expectingQuestion = false;
                 } else {
-                    // This heading is actually an answer, turn into P
                     const p = doc.createElement('p');
                     p.innerHTML = current.innerHTML;
                     current.replaceWith(p);
                     expectingQuestion = true;
                 }
             } else {
-                // Any other tag (P, UL, etc.) is considered part of the answer
                 expectingQuestion = true;
             }
             
@@ -108,8 +101,6 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
         setContent(doc.body.innerHTML);
         toast.success('FAQs successfully auto-formatted!');
     };
-
-
 
     return (
         <div className="ag-card p-6 md:p-8 max-[426px]:p-4 space-y-6 shadow-sm border-slate-100/50 relative">
@@ -127,7 +118,7 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
             <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">Permalink (Slug)</label>
                 <div className="flex items-center px-2">
-                    <span className="text-sm text-slate-400 select-none mr-1">navimumbaipropertydeals.com/blogs/</span>
+                    <span className="text-sm text-slate-400 select-none mr-1">mazosindhudurg.com/blogs/</span>
                     <input
                         type="text"
                         value={slug}
@@ -152,15 +143,13 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
                     </button>
                 </div>
                 <div className="rich-text-editor relative">
-                    <ReactQuill
-                        theme="snow"
+                    <QuillEditor
                         value={content}
                         onChange={setContent}
                         modules={modules}
-                        ref={editorRef}
+                        editorRef={editorRef}
                         placeholder="Start writing your property news, area guides, or lifestyle tips here..."
                     />
-
                 </div>
             </div>
         </div>
@@ -168,5 +157,3 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
 };
 
 export default BlogEditor;
-
-

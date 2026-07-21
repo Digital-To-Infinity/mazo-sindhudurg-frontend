@@ -10,6 +10,38 @@ export default function SiteLayout({
   return (
     <>
       <Header />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Mazo Sindhudurg",
+            "url": "https://mazosindhudurg.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://mazosindhudurg.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Mazo Sindhudurg",
+            "url": "https://mazosindhudurg.com",
+            "logo": "https://mazosindhudurg.com/icon.png",
+            "sameAs": [
+              "https://www.facebook.com/mazosindhudurg",
+              "https://www.instagram.com/mazosindhudurg"
+            ]
+          })
+        }}
+      />
       <main>{children}</main>
       <Footer />
       <BottomNav />
