@@ -16,9 +16,16 @@ export default async function AdminLayout({
   if (!session) redirect('/admin/login')
 
   return (
-    <div className="admin-layout">
+    <div className="flex h-screen bg-surface-container-low overflow-hidden font-sans relative selection:bg-primary/20">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-fixed/30 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      
       <AdminSidebar />
-      <main className="admin-main">{children}</main>
+      <main className="flex-1 overflow-y-auto relative z-10">
+        <div className="p-8 max-w-[1600px] mx-auto min-h-full">
+          {children}
+        </div>
+      </main>
     </div>
   )
 }
