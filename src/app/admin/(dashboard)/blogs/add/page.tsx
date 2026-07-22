@@ -36,11 +36,11 @@ const AddBlog = () => {
     const [author, setAuthor] = useState('');
     const [authorRole, setAuthorRole] = useState('');
     const [readTime, setReadTime] = useState('');
-    const [images, setImages] = useState([]);
-    const [tags, setTags] = useState([]);
+    const [images, setImages] = useState<any[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
     const [tagInput, setTagInput] = useState('');
     const [featured, setFeatured] = useState(false);
-    const [categoryOptions, setCategoryOptions] = useState(defaultCategoryOptions);
+    const [categoryOptions, setCategoryOptions] = useState<any[]>(defaultCategoryOptions);
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -59,7 +59,7 @@ const AddBlog = () => {
 
     // Prompt before tab close if there are unsaved changes
     useEffect(() => {
-        const handleBeforeUnload = (e) => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
             if (hasUnsavedChanges) {
                 e.preventDefault();
                 e.returnValue = ''; // Required for Chrome and standard browsers
@@ -115,7 +115,7 @@ const AddBlog = () => {
         try {
             const response = await api.get('/blogs/categories');
             if (response?.success) {
-                const apiCategories = response.data.map(cat => ({
+                const apiCategories = response.data.map((cat: any) => ({
                     value: cat.name,
                     label: cat.name
                 }));
@@ -150,7 +150,7 @@ const AddBlog = () => {
         }
 
         try {
-            const response = await api.post('/admin/blogs/categories', { name: customCategory.trim() });
+            const response: any = await api.post('/admin/blogs/categories', { name: customCategory.trim() });
             if (response?.success) {
                 toast.success('Category added successfully!');
                 // Reset custom category and refresh list
@@ -158,7 +158,7 @@ const AddBlog = () => {
                 setCustomCategory('');
                 await fetchCategories();
             }
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error.message || 'Failed to add category');
         }
     };
