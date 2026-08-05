@@ -6,10 +6,9 @@ interface ListingRendererProps {
 }
 
 export default function ListingRenderer({ route }: ListingRendererProps) {
-  // Use slug as type filter if applicable, otherwise all
-  const type = ['beaches', 'forts', 'food', 'stay', 'activity'].includes(route.slug)
-    ? route.slug.replace(/es$/, '').replace(/s$/, '') // simple singularize
-    : 'all'
+  // Use entityType from the resolver if available, otherwise pass the slug
+  // as the type filter and let the backend handle filtering by content_type
+  const type = route.entityType || route.slug || 'all'
 
   return (
     <div className="listing-page">

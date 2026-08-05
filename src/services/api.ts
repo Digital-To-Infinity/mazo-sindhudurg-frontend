@@ -21,6 +21,7 @@ async function request<T>(path: string, options?: RequestInit & { params?: any }
 
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     ...fetchOptions,
   })
   
@@ -35,13 +36,26 @@ async function request<T>(path: string, options?: RequestInit & { params?: any }
 export const api = {
   get: <T>(path: string, options?: { params?: any } & RequestInit) => 
     request<T>(path, options),
+  post: <T>(path: string, body: unknown, options?: { params?: any } & RequestInit) => {
+    const isFormData = body instanceof FormData;
+    return request<T>(path, { 
+      method: 'POST', 
+      body: isFormData ? body : JSON.stringify(body), 
+      ...(isFormData ? { headers: {} } : {}),
+      ...options 
+    });
+  },
     
-  post: <T>(path: string, body: unknown, options?: { params?: any } & RequestInit) =>
-    request<T>(path, { method: 'POST', body: JSON.stringify(body), ...options }),
-    
-  put: <T>(path: string, body: unknown, options?: { params?: any } & RequestInit) =>
-    request<T>(path, { method: 'PUT', body: JSON.stringify(body), ...options }),
-    
+  put: <T>(path: string, body: unknown, options?: { params?: any } & RequestInit) => {
+    const isFormData = body instanceof FormData;
+    return request<T>(path, { 
+      method: 'PUT', 
+      body: isFormData ? body : JSON.stringify(body), 
+      ...(isFormData ? { headers: {} } : {}),
+      ...options 
+    });
+  },
+  
   delete: <T>(path: string, options?: { params?: any } & RequestInit) => 
     request<T>(path, { method: 'DELETE', ...options }),
 }

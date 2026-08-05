@@ -96,7 +96,7 @@ export default function Header() {
 
           {/* Blog */}
           <div className="relative group py-2">
-            <Link href="/blog" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
+            <Link href="/blogs" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
               Blog
             </Link>
           </div>

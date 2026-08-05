@@ -1,9 +1,14 @@
-import type { Content } from './content'
+import type { Content, SeoData } from './content'
+
+export interface Breadcrumb {
+  label: string
+  path: string
+}
 
 export interface Route {
   id: number
   slug: string
-  type: 'page' | 'listing'
+  type: 'page' | 'listing' | 'detail'
   title: string
   subtitle?: string
   heroImage?: string
@@ -11,4 +16,12 @@ export interface Route {
   jsonLd?: Record<string, unknown>
   priority?: number
   updatedAt: string
+  /** Detail-route fields returned by the resolver */
+  entityType?: string
+  template?: string
+  canonicalPath?: string
+  breadcrumbs?: Breadcrumb[]
+  data?: Record<string, unknown>
+  seo?: SeoData
+  schemas?: Record<string, unknown>[]
 }

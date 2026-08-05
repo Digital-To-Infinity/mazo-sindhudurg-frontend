@@ -5,6 +5,7 @@ import BlogCard from "./BlogCard";
 import { SearchX, ArrowRight, Flame } from "lucide-react";
 import { api } from "@/services/api";
 import { BlogPost } from "../blog-detail/Blogdata";
+import { getOptimizedImageUrl } from "@/lib/utils";
 
 interface BlogGridProps {
     searchQuery: string;
@@ -34,11 +35,11 @@ const BlogGrid = ({ searchQuery, setSearchQuery, activeCategory, setActiveCatego
                         excerpt: b.excerpt || (b.content ? b.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : ''),
                         content: b.content,
                         date: b.date || new Date(b.created_at || b.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-                        author: b.author || 'NM Admin',
-                        authorRole: b.author_role || b.authorRole || 'Editor',
+                        author: b.authors?.name || b.author || 'Admin',
+                        authorRole: b.authors?.designation || b.author_role || b.authorRole || 'Editor',
                         authorImage: b.author_image || b.authorImage || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-                        category: b.category,
-                        image: b.cover_image_url || b.coverImage || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa',
+                        category: typeof b.category === 'object' ? b.category?.name : (b.category || 'Travel'),
+                        image: getOptimizedImageUrl(b.media?.secure_url || b.cover_image_url || b.coverImage || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa', 600),
                         readTime: b.body?.readTime || b.readTime || '5 min read',
                         tags: b.body?.tags || b.tags || []
                     }));
@@ -71,11 +72,11 @@ const BlogGrid = ({ searchQuery, setSearchQuery, activeCategory, setActiveCatego
                         excerpt: b.excerpt || (b.content ? b.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : ''),
                         content: b.content,
                         date: b.date || new Date(b.created_at || b.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-                        author: b.author || 'NM Admin',
-                        authorRole: b.author_role || b.authorRole || 'Editor',
+                        author: b.authors?.name || b.author || 'Admin',
+                        authorRole: b.authors?.designation || b.author_role || b.authorRole || 'Editor',
                         authorImage: b.author_image || b.authorImage || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-                        category: b.category,
-                        image: b.cover_image_url || b.coverImage || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa',
+                        category: typeof b.category === 'object' ? b.category?.name : (b.category || 'Travel'),
+                        image: getOptimizedImageUrl(b.media?.secure_url || b.cover_image_url || b.coverImage || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa', 600),
                         readTime: b.body?.readTime || b.readTime || '5 min read',
                         tags: b.body?.tags || b.tags || []
                     }));

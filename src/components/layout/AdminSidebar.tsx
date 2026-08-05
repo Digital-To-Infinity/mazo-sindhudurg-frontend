@@ -7,20 +7,17 @@ import {
   FileText,
   Settings,
   ArrowLeft,
-  Users,
-  MapPin,
-  Hotel,
-  CalendarDays,
-  BookOpen,
+  Image,
+  ClipboardList,
+  Layers,
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  // { href: '/admin/content', label: 'Content', icon: FileText },
   { href: "/admin/blogs", label: "Blogs", icon: LayoutDashboard },
-  { href: "/admin/attractions", label: "Attractions", icon: MapPin },
-  { href: "/admin/hotels", label: "Hotels", icon: Hotel },
-  { href: "/admin/plan", label: "Plan", icon: CalendarDays },
-  { href: "/admin/guides", label: "Guides", icon: BookOpen },
+  { href: "/admin/pages", label: "Pages", icon: Layers },
+  { href: "/admin/content", label: "Content Registry", icon: FileText },
+  { href: "/admin/media", label: "Media Library", icon: Image },
+  { href: "/admin/submissions", label: "Submissions", icon: ClipboardList },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 

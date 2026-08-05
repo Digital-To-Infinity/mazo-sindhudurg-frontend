@@ -44,6 +44,7 @@ const config: Config = {
               "surface-container-lowest": "#ffffff",
               "on-tertiary": "#ffffff",
               "primary": "#001e40",
+              "primary-dark": "#001530",
               "tertiary-fixed-dim": "#ffb690",
               "surface-container": "#eeedf2",
               "primary-container": "#003366",

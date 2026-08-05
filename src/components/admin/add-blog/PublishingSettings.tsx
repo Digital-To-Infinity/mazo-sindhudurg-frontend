@@ -29,8 +29,8 @@ const PublishingSettings = ({
     categoryOptions 
 }: PublishingSettingsProps) => {
     return (
-        <div className="relative space-y-6 bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm">
-            <h4 className="text-[11px] font-black text-blue-500 uppercase tracking-widest pl-1 border-b border-white/50 pb-3 flex items-center">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+            <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-3 mb-5">
                 Publishing Settings
             </h4>
 

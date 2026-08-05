@@ -16,6 +16,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { getOptimizedImageUrl } from "@/lib/utils";
 interface BlogDetailProps {
     post: BlogPost;
 }
@@ -162,8 +163,8 @@ const BlogDetail = ({ post }: BlogDetailProps) => {
                                 className="relative aspect-[1200/630] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-black/10"
                             >
                                 <Image
-                                    src={post.image}
-                                    alt={`${post.title} | Navi Mumbai Property Market Insight`}
+                                    src={getOptimizedImageUrl(post.image, 1200)}
+                                    alt={`${post.title} | Mazo Sindhudurg Insight`}
                                     fill
                                     className="object-cover"
                                     priority
@@ -258,7 +259,7 @@ const BlogDetail = ({ post }: BlogDetailProps) => {
                                         >
                                             <div className="relative aspect-[1200/630] overflow-hidden">
                                                 <Image
-                                                    src={relatedPost.image}
+                                                    src={getOptimizedImageUrl(relatedPost.image, 600)}
                                                     alt={relatedPost.title}
                                                     fill
                                                     className="object-cover group-hover:scale-110 transition-transform duration-1000"

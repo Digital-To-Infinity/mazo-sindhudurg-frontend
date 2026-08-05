@@ -13,8 +13,8 @@ export default async function AdminLayout({
   children: React.ReactNode
 }) {
   const session = await getSession()
-  // TEMPORARILY DISABLED: Prevent infinite redirect loop until auth is fully hooked up
-  // if (!session) redirect('/admin/login')
+  // Auth is now fully hooked up
+  if (!session) redirect('/admin/login')
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">

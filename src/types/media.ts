@@ -1,6 +1,7 @@
 export interface Media {
   id: number
   url: string
+  secure_url?: string
   publicId: string
   altText?: string
   width: number

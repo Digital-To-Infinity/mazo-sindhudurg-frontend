@@ -1,12 +1,20 @@
 import { api } from './api'
 
 interface LoginPayload { email: string; password: string }
-interface AuthResponse { token: string; user: { id: number; email: string; role: string } }
+interface AuthUser { id: string; email: string; role: string }
+interface AuthResponse { token: string; user: AuthUser }
+interface ApiEnvelope<T> { success: boolean; message: string; data: T }
 
 export async function login(payload: LoginPayload): Promise<AuthResponse> {
-  return api.post<AuthResponse>('/auth/login', payload)
+  const envelope = await api.post<ApiEnvelope<AuthResponse>>('/auth/login', payload)
+  return envelope.data
 }
 
 export async function logout(): Promise<void> {
-  return api.post('/auth/logout', {})
+  await api.post('/auth/logout', {})
+}
+
+export async function getMe(): Promise<AuthUser> {
+  const envelope = await api.get<ApiEnvelope<AuthUser>>('/auth/me')
+  return envelope.data
 }

@@ -99,45 +99,58 @@ const BlogManagement = () => {
   // Quick Edit State
   const [quickEditId, setQuickEditId] = useState<number | null>(null);
   const [quickEditData, setQuickEditData] = useState<any>(null);
+  const [isQuickSaving, setIsQuickSaving] = useState(false);
+  const [duplicatingId, setDuplicatingId] = useState<number | null>(null);
+  const [blogToDelete, setBlogToDelete] = useState<any>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleQuickEditInit = (blog: any) => {
     setQuickEditId(blog.id);
     setQuickEditData({
       title: blog.title || '',
       slug: blog.slug || '',
-      category: blog.category || blog.body?.category || '',
+      category: blog.category?.name || blog.body?.category || '',
       status: blog.status || 'Draft',
       date: blog.date ? new Date(blog.date).toISOString().split('T')[0] : (blog.created_at ? new Date(blog.created_at).toISOString().split('T')[0] : ''),
       author_name: blog.body?.author || blog.author_name || blog.author || '',
-      tags: blog.body?.tags ? (Array.isArray(blog.body.tags) ? blog.body.tags.join(', ') : blog.body.tags) : '',
+      tags: blog.article_tags?.map((at: any) => at.tags?.name).join(', ') || (blog.body?.tags ? (Array.isArray(blog.body.tags) ? blog.body.tags.join(', ') : blog.body.tags) : ''),
       allowComments: true
     });
   };
 
+    const slugify = (str: string) => str.toLowerCase().replace(/[\s_]+/g, '-').replace(/[^\w-]+/g, '');
+
   const handleQuickEditSave = async () => {
+    if (!quickEditData.title?.trim()) {
+      toast.error('Title is required');
+      return;
+    }
+    if (!quickEditData.slug?.trim()) {
+      toast.error('Slug is required');
+      return;
+    }
+
+    setIsQuickSaving(true);
     try {
-      const existingBlog = blogs.find(b => b.id === quickEditId);
       const payload = {
-        title: quickEditData.title,
-        slug: quickEditData.slug,
-        status: quickEditData.status ? quickEditData.status.toUpperCase() : 'DRAFT',
-        body: {
-            ...existingBlog?.body,
-            category: quickEditData.category,
-            date: quickEditData.date,
-            author: quickEditData.author_name,
-            tags: quickEditData.tags ? quickEditData.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : []
-        }
+        title: quickEditData.title.trim(),
+        slug: quickEditData.slug.trim(),
+        status: quickEditData.status ? quickEditData.status.toLowerCase() : 'draft',
+        category_slug: quickEditData.category ? slugify(quickEditData.category) : undefined,
+        tags: quickEditData.tags ? quickEditData.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
+        published_at: quickEditData.date ? new Date(quickEditData.date).toISOString() : null
       };
-      
+
       const response = await api.put(`/content/${quickEditId}`, payload) as any;
       if (response.data) {
         toast.success('Article quick updated successfully!');
         setQuickEditId(null);
         fetchBlogs();
       }
-    } catch (error) {
-      toast.error('Failed to quick update article');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to quick update article');
+    } finally {
+      setIsQuickSaving(false);
     }
   };
 
@@ -161,10 +174,16 @@ const BlogManagement = () => {
     try {
         const response = await api.get('/content', { params: { type: 'BLOG', limit: 500, page: 1 } }) as any;
         if (response.data?.items) {
-          const cats = [...new Set(response.data.items.map((b: any) => b.body?.category || b.category).filter(Boolean))].sort() as string[];
+          const cats = [...new Set(response.data.items.map((b: any) => {
+            const cat = b.category || b.body?.category;
+            return typeof cat === 'object' ? cat?.name : cat;
+          }).filter(Boolean))].sort() as string[];
           setAvailableCategories(cats);
 
-          const authors = [...new Set(response.data.items.map((b: any) => b.body?.author || b.author_name || b.author).filter(Boolean))].sort() as string[];
+          const authors = [...new Set(response.data.items.map((b: any) => {
+            const auth = b.author || b.author_name || b.body?.author;
+            return typeof auth === 'object' ? auth?.name : auth;
+          }).filter(Boolean))].sort() as string[];
           setAvailableAuthors(authors);
         }
     } catch (error) {
@@ -339,75 +358,96 @@ const BlogManagement = () => {
   };
 
   const handleDuplicate = async (blog: any) => {
+    setDuplicatingId(blog.id);
     try {
-      const newBlog = {
-          title: `${blog.title} (Copy)`,
-          type: 'BLOG',
-          excerpt: blog.excerpt,
-          content: blog.content,
-          status: 'DRAFT',
-          body: blog.body
-      };
-      const response = await api.post(`/content`, newBlog) as any;
-      if (response.data) {
-        toast.success('Article duplicated successfully!');
-        fetchBlogs();
+      // 1. Fetch full blog details (in case content_html, hero_media_id are missing)
+      const fullBlogRes = await api.get(`/content/${blog.id}`) as any;
+      const fullBlog = fullBlogRes.data || fullBlogRes;
+
+      // 2. Fetch SEO metadata (if exists)
+      let seoData: any = null;
+      try {
+        const seoRes = await api.get(`/seo/${blog.id}`) as any;
+        seoData = seoRes.data || seoRes;
+      } catch (e) {
+        console.log('No SEO metadata found for original blog');
       }
-    } catch (error) {
-      toast.error('Failed to duplicate article');
+
+      // 3. Generate unique title and slug
+      const newTitle = `${blog.title} (Copy)`;
+      const baseSlug = slugify(newTitle);
+      let uniqueSlug = baseSlug;
+      let counter = 1;
+      const existingSlugs = new Set(blogs.map((b: any) => b.slug));
+      while (existingSlugs.has(uniqueSlug)) {
+        counter++;
+        uniqueSlug = `${baseSlug}-${counter}`;
+      }
+
+      // 4. Construct payload
+      const payload = {
+        title: newTitle,
+        slug: uniqueSlug,
+        content_type: 'blog',
+        excerpt: fullBlog.excerpt || undefined,
+        content_html: fullBlog.content_html || undefined,
+        status: 'draft',
+        hero_media_id: fullBlog.hero_media_id ? Number(fullBlog.hero_media_id) : undefined,
+        category_slug: fullBlog.category?.slug || undefined,
+        tags: fullBlog.article_tags?.map((at: any) => at.tags?.name).filter(Boolean) || [],
+        author_id: fullBlog.author_id ? Number(fullBlog.author_id) : undefined,
+        reading_time_minutes: fullBlog.reading_time_minutes ? Number(fullBlog.reading_time_minutes) : undefined
+      };
+
+      // 5. Create the duplicated blog post
+      const response = await api.post(`/content`, payload) as any;
+      const createdBlog = response.data || response;
+      const newBlogId = createdBlog.id;
+
+      // 6. Duplicate SEO metadata if it existed
+      if (newBlogId && seoData && (seoData.title || seoData.description || seoData.canonicalUrl)) {
+        try {
+          await api.put(`/seo/${newBlogId}`, {
+            title: seoData.title || undefined,
+            description: seoData.description || undefined,
+            canonicalUrl: seoData.canonicalUrl || undefined,
+            noIndex: seoData.noIndex || false
+          });
+        } catch (seoErr) {
+          console.error('Failed to duplicate SEO data:', seoErr);
+        }
+      }
+
+      toast.success('Article duplicated successfully!');
+      fetchBlogs();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to duplicate article');
+    } finally {
+      setDuplicatingId(null);
+      setOpenDropdownId(null);
     }
+  };
+
+  const handleDelete = (blog: any) => {
+    setBlogToDelete(blog);
     setOpenDropdownId(null);
   };
 
-  const handleDelete = (id: number) => {
-    toast((t) => (
-      <div className="flex flex-col gap-4 p-1">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center shrink-0">
-            <Trash2 size={20} />
-          </div>
-          <div>
-            <p className="font-bold text-slate-900">Confirm Delete Blog Article?</p>
-            <p className="text-xs text-slate-500 mt-0.5">This action cannot be undone.</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 mt-1">
-          <button
-            onClick={async () => {
-              try {
-                const response = await api.delete(`/content/${id}`) as any;
-                if (response.data) {
-                  toast.dismiss(t.id);
-                  toast.success('Article deleted successfully!');
-                  fetchBlogs();
-                }
-              } catch (error) {
-                toast.error('Failed to delete article');
-              }
-            }}
-            className="flex-1 bg-red-600 hover:bg-red-700 text-white text-[12px] font-black px-4 py-3 rounded-full transition-all cursor-pointer active:scale-95 uppercase tracking-wider"
-          >
-            Delete
-          </button>
-          <button
-            onClick={() => toast.dismiss(t.id)}
-            className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-[12px] font-black px-4 py-3 rounded-full transition-all cursor-pointer active:scale-95 uppercase tracking-wider"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    ), {
-      duration: 6000,
-      position: 'top-center',
-      style: {
-        minWidth: '300px',
-        padding: '16px',
-        borderRadius: '24px',
-        background: '#fff',
-        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
-      },
-    });
+  const handleConfirmDelete = async () => {
+    if (!blogToDelete) return;
+    setIsDeleting(true);
+    try {
+      const response = await api.delete(`/content/${blogToDelete.id}`) as any;
+      if (response.data) {
+        toast.success('Article deleted successfully!');
+        setBlogToDelete(null);
+        fetchBlogs();
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to delete article');
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   // Status filter toggle
@@ -435,7 +475,7 @@ const BlogManagement = () => {
   };
 
   const filteredCategories = availableCategories.filter(cat =>
-    cat.toLowerCase().includes(categorySearchTerm.toLowerCase())
+    String(cat || '').toLowerCase().includes(categorySearchTerm.toLowerCase())
   );
 
   // Page input handler
@@ -867,10 +907,11 @@ const BlogManagement = () => {
                               </span>
                             )}
                           </div>
-                          <p className="text-xs font-semibold text-slate-500 mt-0.5 opacity-80">{blog.body?.category || blog.category || 'Uncategorized'}</p>
-                          
+                          <span className="text-zinc-600 font-medium">
+                        {blog.category?.name || blog.body?.category || 'Uncategorized'}
+                      </span>    
                           {/* Row Actions */}
-                          <div className="absolute left-0 top-full mt-1.5 flex items-center gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto whitespace-nowrap z-10">
+                          <div className="mt-1.5 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
                             <Link href={`/admin/content/edit/${blog.id}`} className="text-xs font-bold text-primary hover:text-primary/80 transition-colors">Edit</Link>
                             <span className="text-slate-300 text-[10px]">•</span>
                             {blog.status === 'PUBLISHED' ? (
@@ -881,9 +922,15 @@ const BlogManagement = () => {
                             <span className="text-slate-300 text-[10px]">•</span>
                             <button onClick={() => handleQuickEditInit(blog)} className="text-xs font-bold text-slate-600 hover:text-black transition-colors cursor-pointer">Quick Edit</button>
                             <span className="text-slate-300 text-[10px]">•</span>
-                            <button onClick={() => handleDuplicate(blog)} className="text-xs font-bold text-slate-600 hover:text-black transition-colors cursor-pointer">Duplicate</button>
+                            <button
+                              onClick={() => handleDuplicate(blog)}
+                              disabled={duplicatingId === blog.id}
+                              className="text-xs font-bold text-slate-600 hover:text-black transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              {duplicatingId === blog.id ? 'Duplicating...' : 'Duplicate'}
+                            </button>
                             <span className="text-slate-300 text-[10px]">•</span>
-                            <button onClick={() => handleDelete(blog.id)} className="text-xs font-bold text-red-500 hover:text-red-600 transition-colors cursor-pointer">Delete</button>
+                            <button onClick={() => handleDelete(blog)} className="text-xs font-bold text-red-500 hover:text-red-600 transition-colors cursor-pointer">Delete</button>
                           </div>
                         </div>
                       </div>
@@ -894,7 +941,7 @@ const BlogManagement = () => {
                       </div>
                     </td>
                     <td className="py-5">
-                      <span className="text-[13px] text-slate-600 font-semibold bg-slate-100 px-3 py-1 rounded-lg border border-slate-200/50 group-hover:bg-white group-hover:border-slate-300 transition-colors">{blog.body?.category || blog.category || 'Uncategorized'}</span>
+                      <span className="text-[13px] text-slate-600 font-semibold bg-slate-100 px-3 py-1 rounded-lg border border-slate-200/50 group-hover:bg-white group-hover:border-slate-300 transition-colors">{blog.body?.category || (typeof blog.category === 'object' ? blog.category?.name : blog.category) || 'Uncategorized'}</span>
                     </td>
                     <td className="px-6 py-5">
                       <span className="text-[13px] font-bold text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">{blog.views?.toLocaleString() || 0}</span>
@@ -926,7 +973,7 @@ const BlogManagement = () => {
                           <Edit size={18} />
                         </Link>
                         <button
-                          onClick={() => handleDelete(blog.id)}
+                          onClick={() => handleDelete(blog)}
                           className="p-2 text-slate-500 hover:text-red-500 transition-colors hover:bg-red-50 rounded-lg border border-transparent hover:border-red-100 cursor-pointer"
                           title="Delete"
                         >
@@ -1059,15 +1106,17 @@ const BlogManagement = () => {
                           <div className="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-100">
                             <button
                               onClick={handleQuickEditCancel}
-                              className="px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+                              disabled={isQuickSaving}
+                              className="px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                               Cancel
                             </button>
                             <button
                               onClick={handleQuickEditSave}
-                              className="px-6 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg shadow-sm transition-colors cursor-pointer"
+                              disabled={isQuickSaving}
+                              className="px-6 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg shadow-sm transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              Update
+                              {isQuickSaving ? 'Updating...' : 'Update'}
                             </button>
                           </div>
                         </div>
@@ -1167,10 +1216,11 @@ const BlogManagement = () => {
                     </button>
                     <button
                       onClick={() => handleDuplicate(selectedBlog)}
-                      className="w-full flex items-center space-x-3 px-4 py-2.5 font-semibold text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors cursor-pointer text-left"
+                      disabled={duplicatingId === selectedBlog.id}
+                      className="w-full flex items-center space-x-3 px-4 py-2.5 font-semibold text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors cursor-pointer text-left disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Copy size={16} />
-                      <span>Duplicate Article</span>
+                      <span>{duplicatingId === selectedBlog.id ? 'Duplicating...' : 'Duplicate Article'}</span>
                     </button>
                     <button
                       onClick={() => handleToggleFeatured(selectedBlog.id)}
@@ -1334,6 +1384,51 @@ const BlogManagement = () => {
         </div>
       </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {blogToDelete && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-red-50 text-red-600 rounded-full flex items-center justify-center shrink-0">
+                <Trash2 size={24} />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-slate-950">Delete Article?</h3>
+                <p className="text-xs text-slate-400 font-medium">This action cannot be undone.</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Are you sure you want to permanently delete <strong className="text-slate-900 font-black">"{blogToDelete.title}"</strong>?
+            </p>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                disabled={isDeleting}
+                onClick={() => setBlogToDelete(null)}
+                className="flex-1 bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-800 text-sm font-bold px-4 py-3 rounded-2xl border border-slate-200/60 shadow-sm transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={isDeleting}
+                onClick={handleConfirmDelete}
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white text-sm font-bold px-4 py-3 rounded-2xl shadow-lg shadow-red-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isDeleting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Deleting...</span>
+                  </>
+                ) : (
+                  <span>Delete Article</span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 };

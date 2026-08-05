@@ -46,7 +46,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
         >
             {/* Publisher Schema (Hidden for SEO) */}
             <div itemProp="publisher" itemScope itemType="https://schema.org/Organization" className="hidden">
-                <meta itemProp="name" content="Navi Mumbai Property Deals" />
+                <meta itemProp="name" content="Mazo Sindhudurg" />
             </div>
 
             {/* Image Section */}

@@ -26,8 +26,8 @@ const BlogActions = ({ handleSave, isFormValid, isDraftValid, isSaving, id, stat
     const isColorful = hasUnsavedChanges && canSave;
 
     return (
-        <div className="relative space-y-4 bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm">
-            <h4 className="text-[11px] font-black text-blue-500 uppercase tracking-widest pl-1 border-b border-white/50 pb-3 mb-4">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+            <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-3 mb-5">
                 Status & Actions
             </h4>
             
@@ -63,7 +63,7 @@ const BlogActions = ({ handleSave, isFormValid, isDraftValid, isSaving, id, stat
 
                 {id && (
                     <a
-                        href={`http://localhost:3000/blogs/${slug || id}${status !== 'Published' ? '?preview=true' : ''}`}
+                        href={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/blogs/${slug || id}${status !== 'Published' ? '?preview=true' : ''}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-semibold transition-all bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm mt-1"

@@ -30,29 +30,29 @@ const BlogSchema = ({ post }: BlogSchemaProps) => {
         "articleSection": post.category, // ✅ Added: topic classification
         "keywords": post.tags, // ✅ Added: better keyword signals
         "wordCount": plainText.split(/\s+/).filter(Boolean).length, // ✅ Added: accurate word count
-        "url": `https://navimumbaipropertydeals.com/blogs/${post.slug}`, // ✅ Added: canonical URL
+        "url": `https://mazosindhudurg.com/blogs/${post.slug}`, // ✅ Added: canonical URL
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://navimumbaipropertydeals.com/blogs/${post.slug}`
+            "@id": `https://mazosindhudurg.com/blogs/${post.slug}`
         },
         "author": {
             "@type": "Person",
             "name": post.author,
             "jobTitle": post.authorRole || "Author",
-            "url": `https://navimumbaipropertydeals.com/author/${post.author.toLowerCase().replace(/\s+/g, "-")}`,
+            "url": `https://mazosindhudurg.com/author/${post.author.toLowerCase().replace(/\s+/g, "-")}`,
             "sameAs": [
-                "https://www.linkedin.com/company/navimumbaipropertydeals",
-                "https://twitter.com/navimumbaiproperty"
+                "https://www.facebook.com/mazosindhudurg",
+                "https://www.instagram.com/mazosindhudurg"
             ],
-            "knowsAbout": ["Real Estate", "Navi Mumbai", "Property Investment"]
+            "knowsAbout": ["Sindhudurg", "Tourism", "Konkan Beaches", "Local Food", "Konkan Forts"]
         },
         "publisher": {
             "@type": "Organization",
-            "name": "Navi Mumbai Property Deals",
-            "url": "https://navimumbaipropertydeals.com",
+            "name": "Mazo Sindhudurg",
+            "url": "https://mazosindhudurg.com",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://navimumbaipropertydeals.com/logo.png"
+                "url": "https://mazosindhudurg.com/logo.png"
             }
         }
     };
@@ -66,19 +66,19 @@ const BlogSchema = ({ post }: BlogSchemaProps) => {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://navimumbaipropertydeals.com"
+                "item": "https://mazosindhudurg.com"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Blogs",
-                "item": "https://navimumbaipropertydeals.com/blogs"
+                "item": "https://mazosindhudurg.com/blogs"
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": post.title,
-                "item": `https://navimumbaipropertydeals.com/blogs/${post.slug}`
+                "item": `https://mazosindhudurg.com/blogs/${post.slug}`
             }
         ]
     };
