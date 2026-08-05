@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+import DevTools from '@/components/DevTools'
 import './globals.css'
 
-const plusJakartaSans = Plus_Jakarta_Sans({ 
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-plus-jakarta-sans',
@@ -14,10 +15,8 @@ export const metadata: Metadata = {
     template: '%s | Mazo Sindhudurg',
   },
   description: 'Your complete guide to Sindhudurg – beaches, forts, food, travel tips and more.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://mazosindhudurg.com'),
 }
-
-import { Agentation } from "agentation"
 
 export default function RootLayout({
   children,
@@ -31,7 +30,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        {process.env.NODE_ENV === "development" && <Agentation />}
+        <DevTools />
       </body>
     </html>
   )

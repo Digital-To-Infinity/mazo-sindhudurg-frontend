@@ -318,9 +318,9 @@ const BlogManagement = () => {
   const handleStatusUpdate = async (id: number, newStatus: string) => {
     try {
       const blog = blogs.find(b => b.id === id);
-      const response = await api.put(`/content/${id}`, { status: newStatus.toUpperCase() }) as any;
-      if (response.data) {
-        setBlogs(prev => prev.map(b => b.id === id ? { ...b, status: newStatus.toUpperCase() } : b));
+      const response = await api.put(`/content/${id}`, { status: newStatus.toLowerCase() }) as any;
+      if (response.data !== undefined) {
+        setBlogs(prev => prev.map(b => b.id === id ? { ...b, status: newStatus.toLowerCase() } : b));
         toast.success(`Article status updated to ${newStatus}`);
       }
     } catch (error) {
@@ -334,12 +334,10 @@ const BlogManagement = () => {
     if (!blog) return;
 
     try {
-      const newState = !(blog.body?.featured);
-      const response = await api.put(`/content/${id}`, { 
-          body: { ...blog.body, featured: newState } 
-      }) as any;
-      if (response.data) {
-        setBlogs(prev => prev.map(b => b.id === id ? { ...b, body: { ...b.body, featured: newState } } : b));
+      const newState = !(blog.is_featured);
+      const response = await api.put(`/content/${id}`, { is_featured: newState }) as any;
+      if (response.data !== undefined) {
+        setBlogs(prev => prev.map(b => b.id === id ? { ...b, is_featured: newState } : b));
         toast.success(newState ? 'Marked as Featured' : 'Removed from Featured');
       }
     } catch (error) {
@@ -370,7 +368,7 @@ const BlogManagement = () => {
         const seoRes = await api.get(`/seo/${blog.id}`) as any;
         seoData = seoRes.data || seoRes;
       } catch (e) {
-        console.log('No SEO metadata found for original blog');
+        // SEO data is optional - no-op if missing
       }
 
       // 3. Generate unique title and slug
@@ -438,7 +436,7 @@ const BlogManagement = () => {
     setIsDeleting(true);
     try {
       const response = await api.delete(`/content/${blogToDelete.id}`) as any;
-      if (response.data) {
+      if (response.success !== false) {
         toast.success('Article deleted successfully!');
         setBlogToDelete(null);
         fetchBlogs();

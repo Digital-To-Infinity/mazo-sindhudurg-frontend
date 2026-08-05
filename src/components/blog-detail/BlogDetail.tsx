@@ -49,7 +49,7 @@ const BlogDetail = ({ post }: BlogDetailProps) => {
                             author: b.author || 'NM Admin',
                             authorRole: b.author_role || b.authorRole || 'Editor',
                             authorImage: b.author_image || b.authorImage || '',
-                            category: b.category,
+                            category: b.category?.name || b.category || 'Travel',
                             image: b.cover_image_url || b.coverImage || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa',
                             readTime: b.body?.readTime || b.readTime || '5 min read',
                             tags: b.body?.tags || b.tags || []

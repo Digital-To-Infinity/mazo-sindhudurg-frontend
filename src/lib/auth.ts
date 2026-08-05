@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 
 interface Session {
-  userId: number
+  userId: string
   email: string
   role: string
 }
@@ -18,7 +18,8 @@ export async function getSession(): Promise<Session | null> {
       { headers: { Authorization: `Bearer ${token}` }, cache: 'no-store' }
     )
     if (!res.ok) return null
-    return res.json()
+    const envelope = await res.json()
+    return envelope?.data ?? null
   } catch {
     return null
   }

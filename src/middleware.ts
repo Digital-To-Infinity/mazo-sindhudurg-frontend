@@ -6,12 +6,11 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value
 
   // Protect admin routes (except login page)
-  // TEMPORARILY DISABLED: Allow user to view admin UI for testing
-  // if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-  //   if (!token) {
-  //     return NextResponse.redirect(new URL('/admin/login', request.url))
-  //   }
-  // }
+  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+    if (!token) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+  }
 
   // Redirect logged-in users away from admin login
   if (pathname === '/admin/login' && token) {
