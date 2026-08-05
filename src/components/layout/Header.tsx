@@ -42,55 +42,55 @@ export default function Header() {
 
           {/* Attractions */}
           <div className="relative group py-2">
-            <Link href="/attractions" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
+            <Link href="/search?q=attractions" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
               Attractions <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-200" />
             </Link>
             <div className="absolute left-0 top-full w-48 bg-white border border-slate-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col p-2 translate-y-2 group-hover:translate-y-0">
-              <Link href="/attractions/beaches" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Beaches</Link>
-              <Link href="/attractions/forts" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Forts</Link>
-              <Link href="/attractions/temples" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Temples</Link>
-              <Link href="/attractions/waterfalls" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Waterfalls</Link>
-              <Link href="/attractions/sindhudurg-fort" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Sindhudurg Fort</Link>
-              <Link href="/attractions/tarkarli-beach" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Tarkarli Beach</Link>
+              <Link href="/search?q=beach" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Beaches</Link>
+              <Link href="/search?q=fort" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Forts</Link>
+              <Link href="/search?q=temple" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Temples</Link>
+              <Link href="/destinations/amboli" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Waterfalls</Link>
+              <Link href="/destinations/malvan" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Sindhudurg Fort</Link>
+              <Link href="/destinations/tarkarli" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Tarkarli Beach</Link>
             </div>
           </div>
 
           {/* Hotels */}
           <div className="relative group py-2">
-            <Link href="/hotels" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
+            <Link href="/search?q=hotel" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
               Hotels <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-200" />
             </Link>
             <div className="absolute left-0 top-full w-48 bg-white border border-slate-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col p-2 translate-y-2 group-hover:translate-y-0">
-              <Link href="/hotels/malvan" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Malvan</Link>
-              <Link href="/hotels/tarkarli" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Tarkarli</Link>
-              <Link href="/hotels/vengurla" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Vengurla</Link>
+              <Link href="/destinations/malvan" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Malvan</Link>
+              <Link href="/destinations/tarkarli" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Tarkarli</Link>
+              <Link href="/destinations/vengurla" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Vengurla</Link>
             </div>
           </div>
 
           {/* Plan Your Trip */}
           <div className="relative group py-2">
-            <Link href="/plan" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
+            <Link href="/search?q=plan" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
               Plan Trip <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-200" />
             </Link>
             <div className="absolute left-0 top-full w-56 bg-white border border-slate-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col p-2 translate-y-2 group-hover:translate-y-0">
-              <Link href="/plan/how-to-reach-sindhudurg" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">How to Reach</Link>
-              <Link href="/plan/best-time-to-visit" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Best Time to Visit</Link>
-              <Link href="/plan/local-transport" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Local Transport</Link>
-              <Link href="/plan/safety-and-sea-conditions" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Safety & Sea Conditions</Link>
+              <Link href="/search?q=reach" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">How to Reach</Link>
+              <Link href="/search?q=time" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Best Time to Visit</Link>
+              <Link href="/search?q=transport" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Local Transport</Link>
+              <Link href="/search?q=safety" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Safety & Sea Conditions</Link>
             </div>
           </div>
 
           {/* Guides */}
           <div className="relative group py-2">
-            <Link href="/guides" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
+            <Link href="/blogs" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
               Guides <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-200" />
             </Link>
             <div className="absolute right-0 top-full w-56 bg-white border border-slate-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col p-2 translate-y-2 group-hover:translate-y-0">
-              <Link href="/guides/itineraries" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Itineraries</Link>
-              <Link href="/guides/food-and-culture" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Food & Culture</Link>
-              <Link href="/guides/seasonal-travel" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Seasonal Travel</Link>
-              <Link href="/guides/travel-tips" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Travel Tips</Link>
-              <Link href="/guides/malvan-two-day-itinerary" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Malvan 2-Day Itinerary</Link>
+              <Link href="/blogs" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Itineraries</Link>
+              <Link href="/blogs" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Food & Culture</Link>
+              <Link href="/blogs" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Seasonal Travel</Link>
+              <Link href="/blogs" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Travel Tips</Link>
+              <Link href="/blogs" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Malvan 2-Day Itinerary</Link>
             </div>
           </div>
 

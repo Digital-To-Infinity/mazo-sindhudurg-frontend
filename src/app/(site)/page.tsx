@@ -137,7 +137,7 @@ export default function Home() {
             <h2 className="font-headline-md text-headline-md text-primary">Explore by Taluka</h2>
             <p className="text-on-surface-variant font-body-md mt-1">Discover unique regions across the Sindhudurg district.</p>
           </div>
-          <Link href="#" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline">
+          <Link href="/destinations" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline">
             Explore All <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -152,7 +152,7 @@ export default function Home() {
             { name: "Dodamarg", places: "21+", image: "/images/talukas/dodamarg.jpg" },
             { name: "Vaibhavwadi", places: "19+", image: "/images/talukas/vaibhavwadi.jpg" },
           ].map((taluka, idx) => (
-            <Link href="#" key={idx} className="group relative rounded-2xl overflow-hidden aspect-[4/3] shadow-sm block bg-surface-container hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-500">
+            <Link href={`/destinations/${taluka.name.toLowerCase()}`} key={idx} className="group relative rounded-2xl overflow-hidden aspect-[4/3] shadow-sm block bg-surface-container hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-500">
               <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${taluka.image}')` }}></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100"></div>
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between z-10">
@@ -167,7 +167,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-        <Link href="#" className="sm:hidden mt-6 block text-center py-3 text-primary border border-primary rounded-lg font-label-md text-label-md active:scale-95 transition-transform">Explore All Talukas</Link>
+        <Link href="/destinations" className="sm:hidden mt-6 block text-center py-3 text-primary border border-primary rounded-lg font-label-md text-label-md active:scale-95 transition-transform">Explore All Talukas</Link>
       </section>
 
       {/* 5. Popular Places */}
@@ -177,7 +177,7 @@ export default function Home() {
             <h2 className="font-headline-md text-headline-md text-primary">Popular Places</h2>
             <p className="text-on-surface-variant font-body-md mt-1">Handpicked favorite destinations for your next adventure.</p>
           </div>
-          <Link href="#" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
+          <Link href="/destinations" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
             View All <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -188,7 +188,7 @@ export default function Home() {
             { title: "Amboli Ghat", category: "Nature", location: "Sawantwadi", info: "Best season: Monsoon", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAXWjGUbIf7tgf7h4lYjzmKnu0CV11_uXWP_oicuE71txUApcsHlEfD7BH30L-VF9W2s5WZD2ETqc1gkziOchfkFt1QUqLAnHDHs35d7SvVN3m569_mK4ZgXSbPOZnwJJd8tT7DjU82LjqA6jkox573rAzs9_6DEjnjy3x6R5c5wgLv6Kuo6mKyWW5ahXrK2BR5NorWXH0u-W0nxXfBdoLKGSOASKKn5DlBV_eoNcbqj7Qytk2lkcPV" },
             { title: "Tarkarli Scuba", category: "Water Sports", location: "Malvan", info: "Activity duration: 4 hours", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuARjABiIeR1fsCaPV8JGFa1EfNq1Y20A1oZBQHl3EIGv-7w_1hvJpwpRdG0s5Ffp0PrcBHQbJSsVf9G8ASKtXDOnNQI9d7mjJofzIBhm3izAVNNeHt_8NNuN4xQOfWnd0t5LTP2C_uyDxO4j7PG4Wesb4T1x-fBE2oJNBAUzG4QdpkxyH-ZPa3c7I1ySuaOcX3IGIx-pRs8LyrQSUYqE4LYJldqAWLz-k-KggTiYvRfB68KBQsrW1HW" }
           ].map((place, idx) => (
-            <Link key={idx} href="#" className="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 block">
+            <Link key={idx} href={`/destinations/${place.location.toLowerCase()}`} className="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 block">
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${place.image}')` }}></div>
                 <div className="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded shadow-sm transform transition-transform group-hover:scale-105 group-hover:bg-primary group-hover:text-white duration-300">
@@ -222,7 +222,7 @@ export default function Home() {
           ].map((cat, idx) => {
             const Icon = cat.icon;
             return (
-              <Link key={idx} href="#" className="group flex flex-col items-center p-6 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary hover:-translate-y-2 transition-all duration-300">
+              <Link key={idx} href={`/search?q=${cat.title.toLowerCase()}`} className="group flex flex-col items-center p-6 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary hover:-translate-y-2 transition-all duration-300">
                 <div className="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 mb-4 shadow-sm group-hover:shadow-md">
                   <Icon className="w-7 h-7" />
                 </div>
@@ -240,7 +240,7 @@ export default function Home() {
             <h2 className="font-headline-md text-headline-md text-primary">Featured Businesses</h2>
             <p className="text-on-surface-variant font-body-md mt-1">Trusted stays and services recommended for you.</p>
           </div>
-          <Link href="#" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
+          <Link href="/search" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
             View Directory <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -251,7 +251,7 @@ export default function Home() {
             { title: "Konkan Crown Resort", category: "Resort", location: "Sawantwadi", verified: false, desc: "A peaceful retreat surrounded by nature, perfect for family getaways.", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC1-h8geDv2vhE5Sl-jN3hlaBJ60nbyOyMIatZI9rGAuIp_PKTitZ4nQZSNb30YQ-cjB9sLQ1dBHOMTs7ivqRNaUvANQpiSuKyHmj2OVgGXKhBr88HG3DeGWNnB9Rl6V2ADAUXe-o6hQ2JzLr3QFc4hknXIFsad25K3GO0aqx_S3sTd5jwkkG_JSsIsuhj_sbvlcXY00oV_ll_Fgvnaj_lmazMOVS5I09iZXN78E05nuxzIu0ZXXu90" }
           ].map((biz, idx) => (
             <div key={idx} className="group bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant shadow-sm flex flex-col hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-2 transition-all duration-500">
-              <Link href="#" className="relative aspect-video w-full block overflow-hidden">
+              <Link href={`/destinations/${biz.location.toLowerCase().split(',')[0].trim()}`} className="relative aspect-video w-full block overflow-hidden">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url('${biz.image}')` }}></div>
                 {biz.verified && (
                   <div className="absolute top-4 left-4 bg-surface-container-lowest/95 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm transform transition-transform duration-300 group-hover:scale-105">
@@ -263,7 +263,7 @@ export default function Home() {
               <div className="p-6 flex flex-col flex-1 space-y-4 bg-gradient-to-t from-surface-container-lowest to-surface-container-lowest group-hover:from-primary/5 transition-colors duration-500">
                 <div className="flex-1">
                   <span className="text-primary font-label-md text-[10px] uppercase tracking-wider block mb-2 font-bold">{biz.category}</span>
-                  <Link href="#"><h3 className="font-bold text-headline-sm text-on-surface line-clamp-1 group-hover:text-primary transition-colors">{biz.title}</h3></Link>
+                  <Link href={`/destinations/${biz.location.toLowerCase().split(',')[0].trim()}`}><h3 className="font-bold text-headline-sm text-on-surface line-clamp-1 group-hover:text-primary transition-colors">{biz.title}</h3></Link>
                   <div className="flex items-center text-outline gap-1.5 mt-2 transform transition-transform group-hover:translate-x-1 duration-300">
                     <MapPin className="w-4 h-4 shrink-0 text-primary/70" />
                     <span className="font-caption text-caption truncate">{biz.location}</span>
@@ -287,7 +287,7 @@ export default function Home() {
       {/* 8. Coastal Stories and Upcoming Events */}
       <section id="stories" className="py-stack-lg px-margin-mobile lg:px-margin-desktop max-w-container-max mx-auto border-t border-surface-variant">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
+
           {/* Coastal Stories (65%) */}
           <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
             <div className="flex justify-between items-end mb-8">
@@ -295,11 +295,11 @@ export default function Home() {
                 <h2 className="font-headline-md text-headline-md text-primary">Coastal Stories</h2>
                 <p className="text-on-surface-variant font-body-md mt-1">Travel guides & local insights</p>
               </div>
-              <Link href="#" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
+              <Link href="/blogs" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
                 View All <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            <Link href="#" className="group flex flex-col md:flex-row gap-6 bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-2 transition-all duration-500 flex-1">
+            <Link href="/blogs" className="group flex flex-col md:flex-row gap-6 bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-2 transition-all duration-500 flex-1">
               <div className="relative aspect-[16/9] md:aspect-square md:w-2/5 overflow-hidden shrink-0">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTewhLSee__uiaWTNkURuJ0O-eEsqjhW5JqFXFexjeto4X2h70Yze16BOP37wPZDCXFTRtk8Em0Ebg1-2Uq3f7WfecAHRVKOK85JpP_IfHngcHqXcqiUlJGEr0X7Sd2eBqwEs8VKV4TrStNuDj8WP0AlYLmUnNh6_HJs5B7K8ohVCT6u4ZhJSXXJaigjXyLn_f-IMkUcYAQiDK9zuyZGy0Aa4GpvuT4rDmSfFhK2K6MGr02wJCX_fL')" }}></div>
               </div>
@@ -325,7 +325,7 @@ export default function Home() {
           <div id="events" className="lg:col-span-5 xl:col-span-4 flex flex-col">
             <div className="flex justify-between items-end mb-8">
               <h2 className="font-headline-md text-headline-md text-primary">Upcoming Events</h2>
-              <Link href="#" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
+              <Link href="/blogs" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
                 View All <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -336,7 +336,7 @@ export default function Home() {
                 { title: "Sawantwadi Arts Fair", dateString: "05", month: "JAN", venue: "Moti Talao", time: "10:00 AM - 8:00 PM" },
                 { title: "Devgad Mango Festival", dateString: "15", month: "APR", venue: "Devgad City Ground", time: "9:00 AM - 9:00 PM" }
               ].map((ev, idx) => (
-                <Link key={idx} href="#" className="group flex items-start gap-4 p-4 md:p-5 bg-surface-container-lowest border border-outline-variant rounded-2xl hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
+                <Link key={idx} href="/blogs" className="group flex items-start gap-4 p-4 md:p-5 bg-surface-container-lowest border border-outline-variant rounded-2xl hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
                   <div className="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-xl w-14 h-14 md:w-16 md:h-16 shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-500 transform group-hover:scale-110 group-hover:-rotate-2 shadow-sm group-hover:shadow-md">
                     <span className="font-headline-md text-headline-md leading-none font-bold">{ev.dateString}</span>
                     <span className="font-label-md text-[10px] uppercase tracking-wider mt-1">{ev.month}</span>
@@ -362,13 +362,13 @@ export default function Home() {
         <div className="bg-primary rounded-3xl p-8 md:p-12 text-center relative overflow-hidden shadow-xl">
           {/* Subtle texture/graphic using CSS repeating pattern */}
           <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)", backgroundSize: "20px 20px" }}></div>
-          
+
           <div className="relative z-10 max-w-3xl mx-auto space-y-8">
             <h2 className="font-headline-xl text-headline-lg-mobile md:text-headline-xl text-on-primary tracking-tight">Grow Your Business Across Sindhudurg</h2>
             <p className="text-primary-fixed font-body-lg md:text-xl">
               Join the official local-discovery platform. Increase your visibility, connect with travelers, and establish your trusted presence.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 text-primary-fixed font-label-md text-label-md mb-8">
               <div className="flex items-center gap-2"><MapPin className="w-5 h-5" /> Reach local customers</div>
               <div className="flex items-center gap-2"><Search className="w-5 h-5" /> Get discovered by travelers</div>
@@ -376,12 +376,12 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="w-full sm:w-auto bg-on-primary hover:bg-surface-container text-primary font-bold py-4 px-8 rounded-xl transition-colors shadow-lg">
+              <Link href="/add-business" className="w-full sm:w-auto bg-on-primary hover:bg-surface-container text-primary font-bold py-4 px-8 rounded-xl transition-colors shadow-lg inline-block">
                 Add Your Business
-              </button>
-              <button className="w-full sm:w-auto bg-transparent border border-primary-fixed text-primary-fixed hover:bg-primary-fixed hover:text-primary font-bold py-4 px-8 rounded-xl transition-colors">
+              </Link>
+              <Link href="/add-business" className="w-full sm:w-auto bg-transparent border border-primary-fixed text-primary-fixed hover:bg-primary-fixed hover:text-primary font-bold py-4 px-8 rounded-xl transition-colors inline-block">
                 How It Works
-              </button>
+              </Link>
             </div>
           </div>
         </div>
