@@ -99,7 +99,7 @@ export default function Home() {
               )}
             </div>
 
-            <button className="bg-primary hover:bg-primary/90 active:scale-95 text-on-primary px-8 py-3.5 md:py-2 rounded-xl md:rounded-full text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 mt-1 md:mt-0 shadow-lg shadow-primary/30">
+            <button className="bg-primary hover:bg-primary/90 active:scale-95 text-on-primary px-8 py-3 md:py-3.5 rounded-xl md:rounded-full text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 self-stretch md:self-auto shadow-lg shadow-primary/30">
               <Compass className="w-4 h-4" /> Explore
             </button>
           </div>
@@ -111,21 +111,21 @@ export default function Home() {
 
           {/* Quick Category Links */}
           <div className="flex gap-3 overflow-x-auto hide-scrollbar w-full justify-start md:justify-center pb-4 px-4 md:px-0">
-            <button className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
+            <Link href={{ pathname: '/blogs', query: { category: 'Beaches' } }} className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
               <Waves className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:scale-110 transition-transform" /> Beaches
-            </button>
-            <button className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
+            </Link>
+            <Link href={{ pathname: '/blogs', query: { category: 'Hotels' } }} className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
               <BedDouble className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:scale-110 transition-transform" /> Hotels
-            </button>
-            <button className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
+            </Link>
+            <Link href={{ pathname: '/blogs', query: { category: 'Forts' } }} className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
               <Shield className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:scale-110 transition-transform" /> Forts
-            </button>
-            <button className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
+            </Link>
+            <Link href={{ pathname: '/blogs', query: { category: 'Water Sports' } }} className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
               <Anchor className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:scale-110 transition-transform" /> Water Sports
-            </button>
-            <button className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
+            </Link>
+            <Link href={{ pathname: '/blogs', query: { category: 'Temples' } }} className="group flex items-center gap-2 bg-black/40 hover:bg-primary active:bg-primary-dark backdrop-blur-md text-white px-5 py-2.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/50 border border-white/10">
               <Bell className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:scale-110 transition-transform" /> Temples
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -177,35 +177,85 @@ export default function Home() {
             <h2 className="font-headline-md text-headline-md text-primary">Popular Places</h2>
             <p className="text-on-surface-variant font-body-md mt-1">Handpicked favorite destinations for your next adventure.</p>
           </div>
-          <Link href="/destinations" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
+          <Link href="/blogs" className="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md hover:underline group">
             View All <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { title: "Sindhudurg Fort", category: "Historic Fort", location: "Malvan", info: "Best season: Oct - May", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC1-h8geDv2vhE5Sl-jN3hlaBJ60nbyOyMIatZI9rGAuIp_PKTitZ4nQZSNb30YQ-cjB9sLQ1dBHOMTs7ivqRNaUvANQpiSuKyHmj2OVgGXKhBr88HG3DeGWNnB9Rl6V2ADAUXe-o6hQ2JzLr3QFc4hknXIFsad25K3GO0aqx_S3sTd5jwkkG_JSsIsuhj_sbvlcXY00oV_ll_Fgvnaj_lmazMOVS5I09iZXN78E05nuxzIu0ZXXu90" },
-            { title: "Bogwe Beach", category: "Beach", location: "Vengurla", info: "Recommended: 2-3 hours", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXkH49HHK3DRpqq_Ir9I6UK80Fz6yxlDwS2zmn54WSqp3XA6_RV_3o8y0P2FWgL6_TzQi4hask7aMojJ_mr5cYfIraOzOf38oAz3KAk22yslkdKXkX5c1X1IWapm1Qy_mOHvhI41R4YxIZ2E1J6cmcxBLQ60mvjM6_rBMAS2EqHYV6nRMXwKtwKWyMtUE2_Ssj5LaOMOldrHxeC-l5pnVI15XcwWqH6dh1avzAUJPUe8feQVj48ozN" },
-            { title: "Amboli Ghat", category: "Nature", location: "Sawantwadi", info: "Best season: Monsoon", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAXWjGUbIf7tgf7h4lYjzmKnu0CV11_uXWP_oicuE71txUApcsHlEfD7BH30L-VF9W2s5WZD2ETqc1gkziOchfkFt1QUqLAnHDHs35d7SvVN3m569_mK4ZgXSbPOZnwJJd8tT7DjU82LjqA6jkox573rAzs9_6DEjnjy3x6R5c5wgLv6Kuo6mKyWW5ahXrK2BR5NorWXH0u-W0nxXfBdoLKGSOASKKn5DlBV_eoNcbqj7Qytk2lkcPV" },
-            { title: "Tarkarli Scuba", category: "Water Sports", location: "Malvan", info: "Activity duration: 4 hours", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuARjABiIeR1fsCaPV8JGFa1EfNq1Y20A1oZBQHl3EIGv-7w_1hvJpwpRdG0s5Ffp0PrcBHQbJSsVf9G8ASKtXDOnNQI9d7mjJofzIBhm3izAVNNeHt_8NNuN4xQOfWnd0t5LTP2C_uyDxO4j7PG4Wesb4T1x-fBE2oJNBAUzG4QdpkxyH-ZPa3c7I1ySuaOcX3IGIx-pRs8LyrQSUYqE4LYJldqAWLz-k-KggTiYvRfB68KBQsrW1HW" }
-          ].map((place, idx) => (
-            <Link key={idx} href={`/destinations/${place.location.toLowerCase()}`} className="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 block">
+            {
+              title: "Sindhudurg Fort",
+              category: "Historic Fort",
+              location: "Malvan",
+              info: "Best season: Oct - May",
+              href: { pathname: "/blogs", query: { category: "Forts" } },
+              image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC1-h8geDv2vhE5Sl-jN3hlaBJ60nbyOyMIatZI9rGAuIp_PKTitZ4nQZSNb30YQ-cjB9sLQ1dBHOMTs7ivqRNaUvANQpiSuKyHmj2OVgGXKhBr88HG3DeGWNnB9Rl6V2ADAUXe-o6hQ2JzLr3QFc4hknXIFsad25K3GO0aqx_S3sTd5jwkkG_JSsIsuhj_sbvlcXY00oV_ll_Fgvnaj_lmazMOVS5I09iZXN78E05nuxzIu0ZXXu90"
+            },
+            {
+              title: "Bogwe Beach",
+              category: "Beach",
+              location: "Vengurla",
+              info: "Recommended: 2-3 hours",
+              href: { pathname: "/blogs", query: { category: "Beaches" } },
+              image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXkH49HHK3DRpqq_Ir9I6UK80Fz6yxlDwS2zmn54WSqp3XA6_RV_3o8y0P2FWgL6_TzQi4hask7aMojJ_mr5cYfIraOzOf38oAz3KAk22yslkdKXkX5c1X1IWapm1Qy_mOHvhI41R4YxIZ2E1J6cmcxBLQ60mvjM6_rBMAS2EqHYV6nRMXwKtwKWyMtUE2_Ssj5LaOMOldrHxeC-l5pnVI15XcwWqH6dh1avzAUJPUe8feQVj48ozN"
+            },
+            {
+              title: "Amboli Ghat",
+              category: "Nature",
+              location: "Sawantwadi",
+              info: "Best season: Monsoon",
+              href: { pathname: "/blogs", query: { category: "Waterfalls" } },
+              image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAXWjGUbIf7tgf7h4lYjzmKnu0CV11_uXWP_oicuE71txUApcsHlEfD7BH30L-VF9W2s5WZD2ETqc1gkziOchfkFt1QUqLAnHDHs35d7SvVN3m569_mK4ZgXSbPOZnwJJd8tT7DjU82LjqA6jkox573rAzs9_6DEjnjy3x6R5c5wgLv6Kuo6mKyWW5ahXrK2BR5NorWXH0u-W0nxXfBdoLKGSOASKKn5DlBV_eoNcbqj7Qytk2lkcPV"
+            },
+            {
+              title: "Tarkarli Scuba",
+              category: "Water Sports",
+              location: "Malvan",
+              info: "Activity duration: 4 hours",
+              href: { pathname: "/blogs", query: { category: "Water Sports" } },
+              image: "https://lh3.googleusercontent.com/aida-public/AB6AXuARjABiIeR1fsCaPV8JGFa1EfNq1Y20A1oZBQHl3EIGv-7w_1hvJpwpRdG0s5Ffp0PrcBHQbJSsVf9G8ASKtXDOnNQI9d7mjJofzIBhm3izAVNNeHt_8NNuN4xQOfWnd0t5LTP2C_uyDxO4j7PG4Wesb4T1x-fBE2oJNBAUzG4QdpkxyH-ZPa3c7I1ySuaOcX3IGIx-pRs8LyrQSUYqE4LYJldqAWLz-k-KggTiYvRfB68KBQsrW1HW"
+            }
+          ].map((place) => (
+            <Link
+              key={place.title}
+              href={place.href}
+              className="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-xl hover:shadow-primary/10 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 block"
+            >
               <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${place.image}')` }}></div>
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: `url('${place.image}')` }}
+                ></div>
                 <div className="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded shadow-sm transform transition-transform group-hover:scale-105 group-hover:bg-primary group-hover:text-white duration-300">
-                  <span className="text-[10px] font-label-md uppercase tracking-wider group-hover:text-white text-secondary transition-colors">{place.category}</span>
+                  <span className="text-[10px] font-label-md uppercase tracking-wider group-hover:text-white text-secondary transition-colors">
+                    {place.category}
+                  </span>
                 </div>
               </div>
+
               <div className="p-5 space-y-2 bg-gradient-to-t from-surface-container-lowest to-surface-container-lowest group-hover:from-primary/5 transition-colors duration-500 h-full">
-                <h3 className="font-bold text-on-surface text-body-lg line-clamp-1 group-hover:text-primary transition-colors">{place.title}</h3>
+                <h3 className="font-bold text-on-surface text-body-lg line-clamp-1 group-hover:text-primary transition-colors">
+                  {place.title}
+                </h3>
                 <div className="flex items-center text-outline gap-1 transform transition-transform group-hover:translate-x-1 duration-300">
                   <MapPin className="w-4 h-4 shrink-0 text-primary/70" />
                   <span className="font-caption text-caption truncate">{place.location}</span>
                 </div>
-                <p className="text-on-surface-variant font-caption text-caption pt-3 border-t border-surface-variant group-hover:border-primary/20 transition-colors">{place.info}</p>
+                <p className="text-on-surface-variant font-caption text-caption pt-3 border-t border-surface-variant group-hover:border-primary/20 transition-colors">
+                  {place.info}
+                </p>
               </div>
             </Link>
           ))}
         </div>
+
+        <Link
+          href="/blogs"
+          className="sm:hidden mt-6 block text-center py-3 text-primary border border-primary rounded-lg font-label-md text-label-md active:scale-95 transition-transform"
+        >
+          View All Popular Places
+        </Link>
       </section>
 
       {/* 6. Directory Categories */}

@@ -42,16 +42,16 @@ export default function Header() {
 
           {/* Attractions */}
           <div className="relative group py-2">
-            <Link href="/search?q=attractions" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
+            <Link href="/blogs" className="flex items-center gap-1.5 text-slate-700 hover:text-primary transition-colors font-semibold tracking-wide text-sm uppercase">
               Attractions <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-200" />
             </Link>
             <div className="absolute left-0 top-full w-48 bg-white border border-slate-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col p-2 translate-y-2 group-hover:translate-y-0">
-              <Link href="/search?q=beach" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Beaches</Link>
-              <Link href="/search?q=fort" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Forts</Link>
-              <Link href="/search?q=temple" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Temples</Link>
-              <Link href="/destinations/amboli" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Waterfalls</Link>
-              <Link href="/destinations/malvan" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Sindhudurg Fort</Link>
-              <Link href="/destinations/tarkarli" className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Tarkarli Beach</Link>
+              <Link href={{ pathname: '/blogs', query: { category: 'Beaches' } }} className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Beaches</Link>
+              <Link href={{ pathname: '/blogs', query: { category: 'Forts' } }} className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Forts</Link>
+              <Link href={{ pathname: '/blogs', query: { category: 'Temples' } }} className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Temples</Link>
+              <Link href={{ pathname: '/blogs', query: { category: 'Waterfalls' } }} className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Waterfalls</Link>
+              <Link href={{ pathname: '/blogs', query: { category: 'Sindhudurg Fort' } }} className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Sindhudurg Fort</Link>
+              <Link href={{ pathname: '/blogs', query: { category: 'Tarkarli Beach' } }} className="px-4 py-2.5 hover:bg-slate-50 rounded-lg text-sm text-slate-600 font-medium hover:text-primary transition-colors">Tarkarli Beach</Link>
             </div>
           </div>
 

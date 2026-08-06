@@ -38,7 +38,7 @@ export default function BlogFilters({ activeCategory, setActiveCategory }: BlogF
                     // Calculate categories locally
                     const catMap: Record<string, number> = {};
                     data.forEach((b: any) => {
-                        const cat = b.body?.category || 'Other';
+                        const cat = (typeof b.category === 'object' ? b.category?.name : b.category) || 'Other';
                         catMap[cat] = (catMap[cat] || 0) + 1;
                     });
                     
