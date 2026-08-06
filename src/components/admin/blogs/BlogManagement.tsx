@@ -524,7 +524,7 @@ const BlogManagement = () => {
           <motion.h1 layoutId="page-title" className="text-2xl max-[426px]:text-3xl max-[426px]:mb-4 max-[426px]:text-center font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600">
             Blog Management
           </motion.h1>
-          <p className="text-slate-500 font-medium hidden sm:block mt-1">Create and manage content for your property platform.</p>
+          <p className="text-slate-500 font-medium hidden sm:block mt-1">Create and manage content for your travel platform.</p>
         </div>
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Link

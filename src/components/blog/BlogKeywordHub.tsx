@@ -30,7 +30,7 @@ const normalizeBlog = (b: any): BlogPost => ({
     author: b.body?.author || b.author_name || "NM Admin",
     authorRole: b.body?.authorRole || b.author_role || "Editor",
     authorImage: b.author_image || b.authorImage || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
-    category: b.body?.category || "Real Estate",
+    category: b.body?.category || "Sindhudurg",
     image: b.cover_image_url || b.coverImage || "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
     readTime: b.body?.readTime || b.readTime || "5 min read",
     tags: b.body?.tags || b.tags || [],

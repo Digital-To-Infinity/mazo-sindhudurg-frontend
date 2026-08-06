@@ -21,7 +21,7 @@ const BlogExcerpt = ({ excerpt, setExcerpt }: BlogExcerptProps) => {
                 <textarea
                     value={excerpt}
                     onChange={(e) => setExcerpt(e.target.value)}
-                    placeholder="Quick Answer Seawoods is one of Navi Mumbai's premium residential locations..."
+                    placeholder="Write a compelling summary of your Sindhudurg travel article (140–160 characters)..."
                     className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all min-h-[120px] resize-y"
                 />
             </div>

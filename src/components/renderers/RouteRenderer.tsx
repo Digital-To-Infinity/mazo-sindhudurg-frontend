@@ -2,7 +2,7 @@ import { getRouteBySlug } from '@/services/routes'
 import PageRenderer from './PageRenderer'
 import ListingRenderer from './ListingRenderer'
 import DetailRenderer from './DetailRenderer'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 interface RouteRendererProps {
   slug: string
@@ -11,6 +11,10 @@ interface RouteRendererProps {
 export default async function RouteRenderer({ slug }: RouteRendererProps) {
   const route = await getRouteBySlug(slug)
   if (!route) return notFound()
+
+  if (route.redirect) {
+    redirect(route.redirect.destinationPath)
+  }
 
   switch (route.type) {
     case 'detail':

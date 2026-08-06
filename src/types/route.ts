@@ -24,4 +24,6 @@ export interface Route {
   data?: Record<string, unknown>
   seo?: SeoData
   schemas?: Record<string, unknown>[]
+  /** Set when the resolver found a redirect instead of a route */
+  redirect?: { destinationPath: string; status: number }
 }

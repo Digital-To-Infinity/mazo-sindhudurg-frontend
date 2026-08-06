@@ -10,6 +10,14 @@ const config: Config = {
   theme: {
       extend: {
           "colors": {
+              "brand": {
+                  "primary": "#C89B3C",
+                  "primary-hover": "#AD832D",
+                  "heading": "#0E2A47",
+                  "paragraph": "#3A4B5F",
+                  "muted": "#72808F",
+                  "white": "#FFFFFF"
+              },
               "primary-fixed": "#d5e3ff",
               "inverse-surface": "#2f3034",
               "secondary-fixed": "#c1ecd4",

@@ -153,7 +153,7 @@ const BlogEditor = ({ title, handleTitleChange, slug, setSlug, content, setConte
                         onChange={setContent}
                         modules={modules}
                         editorRef={editorRef}
-                        placeholder="Start writing your property news, area guides, or lifestyle tips here..."
+                        placeholder="Start writing your destination guides, travel stories, or local tips here..."
                     />
                 </div>
             </div>

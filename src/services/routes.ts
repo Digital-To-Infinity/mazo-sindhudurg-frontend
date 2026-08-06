@@ -10,10 +10,12 @@ export async function getAllRoutes(): Promise<Route[]> {
 
 export async function getRouteBySlug(slug: string): Promise<Route | null> {
   try {
-    const envelope = await api.get<ApiEnvelope<Route>>(`/routes/${encodeURIComponent(slug)}`)
+    const envelope = await api.get<ApiEnvelope<Route>>(
+      `/routes/resolve?path=${encodeURIComponent(`/${slug}`)}`
+    )
     return envelope.data
   } catch {
-    // 404 or other errors → treat as not found
+    // 404, 410 or other errors → treat as not found
     return null
   }
 }

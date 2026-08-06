@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, BookOpen, MapPin, BarChart3, Wallet, Filter, Hash, ArrowRight } from "lucide-react";
+import { Compass, Mountain, Waves, UtensilsCrossed, MapPin, Landmark, Filter, Hash, ArrowRight } from "lucide-react";
 import { api } from "@/services/api";
 
 interface BlogFiltersProps {
@@ -12,11 +12,12 @@ interface BlogFiltersProps {
 }
 
 const baseCategories = [
-    { name: "All", icon: <TrendingUp size={18} />, color: "from-blue-500 to-indigo-500" },
-    { name: "Market Insights", icon: <BarChart3 size={18} />, color: "from-amber-500 to-orange-500" },
-    { name: "Buying Guide", icon: <BookOpen size={18} />, color: "from-emerald-500 to-teal-500" },
-    { name: "Investment", icon: <Wallet size={18} />, color: "from-rose-500 to-pink-500" },
-    { name: "Lifestyle", icon: <MapPin size={18} />, color: "from-violet-500 to-purple-500" },
+    { name: "All", icon: <Compass size={18} />, color: "from-blue-500 to-indigo-500" },
+    { name: "Beaches", icon: <Waves size={18} />, color: "from-amber-500 to-orange-500" },
+    { name: "Forts", icon: <Landmark size={18} />, color: "from-emerald-500 to-teal-500" },
+    { name: "Food & Culture", icon: <UtensilsCrossed size={18} />, color: "from-rose-500 to-pink-500" },
+    { name: "Destinations", icon: <Mountain size={18} />, color: "from-violet-500 to-purple-500" },
+    { name: "Travel Tips", icon: <MapPin size={18} />, color: "from-slate-500 to-zinc-500" },
 ];
 
 export default function BlogFilters({ activeCategory, setActiveCategory }: BlogFiltersProps) {
@@ -123,51 +124,10 @@ export default function BlogFilters({ activeCategory, setActiveCategory }: BlogF
                             className="inline-flex items-center gap-2 px-4 py-1.5 mb-12 max-[426px]:mb-6 rounded-full bg-zinc-900 text-white border border-white/10 shadow-2xl"
                         >
                             <Hash size={14} className="text-brand-primary animate-pulse" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Navi Mumbai Intelligence</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Sindhudurg Travel Intelligence</span>
                         </motion.div>
                         <h2 className="text-4xl md:text-6xl max-[426px]:text-4xl max-[376px]:text-[32px] max-[321px]:text-[28px] font-black text-brand-heading tracking-tight mb-6 max-[426px]:mb-0">
-                            Explore by {" "}
-                            <motion.div
-                                animate={{
-                                    opacity: 1,
-                                    scale: 1,
-                                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-                                }}
-                                transition={{
-                                    opacity: { duration: 1, delay: 0.4 },
-                                    scale: { duration: 1, delay: 0.4 },
-                                    backgroundPosition: { duration: 5, repeat: Infinity, ease: "linear" }
-                                }}
-                                className="relative inline-block group cursor-default"
-                            >
-                                <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-primary bg-[length:200%_auto] block pb-4 transition-all duration-300 group-hover:drop-shadow-[0_0_15px_rgba(186,163,96,0.3)]">
-                                    Expertise
-                                </span>
-
-                                {/* Animated Underline */}
-                                <motion.div
-                                    className="absolute bottom-2 left-0 h-[3px] bg-gradient-to-r from-brand-primary rounded-full"
-                                    initial={{ width: 0, opacity: 0 }}
-                                    animate={{ width: "100%", opacity: 1 }}
-                                    transition={{ duration: 1.5, delay: 1, ease: "circOut" }}
-                                    aria-hidden="true"
-                                />
-
-                                {/* Light Sweep Effect */}
-                                <motion.div
-                                    animate={{
-                                        left: ["-100%", "200%"],
-                                    }}
-                                    transition={{
-                                        duration: 4,
-                                        repeat: Infinity,
-                                        repeatDelay: 1,
-                                        ease: "easeInOut"
-                                    }}
-                                    className="absolute inset-0 z-10 w-32 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[35deg] pointer-events-none"
-                                    aria-hidden="true"
-                                />
-                            </motion.div>
+                            Explore by <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-primary">Interest</span>
                         </h2>
                     </div>
 

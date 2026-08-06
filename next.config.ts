@@ -20,6 +20,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:5000/api/:path*',
+      },
+    ]
+  },
+  allowedDevOrigins: ['.monkeycode-ai.live'],
 }
 
 export default nextConfig
